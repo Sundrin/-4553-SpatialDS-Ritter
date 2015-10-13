@@ -14,7 +14,7 @@
 |         | Totals:                                          | **100** |    0     | ![Alt text][2] |
 ### Comments:
 ```
-
+Only the given code was present in your file. Well, with 4 additional lines. 
 ```
 
 [1]: http://f.cl.ly/items/3E231i211n2E042B1U3K/right.png  "Correct"
