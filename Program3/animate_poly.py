@@ -8,6 +8,7 @@ Rect  -- two points, forming a rectangle
 import pantograph
 import math
 import sys
+import numpy as np
 
 class Point:
 
