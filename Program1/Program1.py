@@ -1,7 +1,7 @@
-file object = open("output.dat" [, w][, 0])
-print "Devin Ritter"
-print "09/15/2015"
-print "Program 1 - Intro to Quadtrees"
+file object = open('output.dat', 'w')
+file.write('Devin Ritter')
+file.write('09/15/2015')
+file.write('Program 1 - Intro to Quadtrees \n')
 
 import pyqtree
 import csv
@@ -92,6 +92,9 @@ def canvas2lon(lon):
 def main():
     spindex = pyqtree.Index(bbox=[0,0,360,180])
     cities = loadCities()
+    
+    file.write('============================================================================================')
+    file.write('All cities within the bounding box: [45.011419, -111.071777 , 40.996484, -104.040527]:\n')
 
     for c in cities:
         #{'lat': '-18.01274', 'Country': 'Zimbabwe', 'lon': '31.07555', 'Name': 'Chitungwiza'}
@@ -102,13 +105,12 @@ def main():
         maxLat = float(c['lat'])+.1
         maxLon = float(c['lon'])+.1
 
-        bbox =[minLat,minLon,maxLat,maxLon]
+        bbox =[float(c['lat']),float(c['lon']),float(c['lat']),float(c['lon'])]
         spindex.insert(item=item, bbox=bbox)
 
-    overlapbbox = (51,51,86,86)
     overlapbbox = (44.9793710,-110.9619141,41.1941565,-104.2822266)
     matches = spindex.intersect(overlapbbox)
-    print(matches)
+    file.write(matches)
 
     lat1 = 33.912523
     lon1 = -98.497925
