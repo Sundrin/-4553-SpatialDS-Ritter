@@ -3,29 +3,19 @@ print "Devin Ritter"
 print "09/15/2015"
 print "Program 1 - Intro to Quadtrees"
 
-def lat2canvas(lat):
-    """
-    Turn a latitude in the form [-90 , 90] to the form [0 , 180]
-    """
-    return float(lat) % 180
+import pyqtree
+import csv
+from math import *
+import numpy as np
 
-def lon2canvas(lon):
-    """
-    Turn a longitude in the form [-180 , 180] to the form [0 , 360]
-    """
-    return float(lon) % 360
+def loadCities():
+    citys = []
+    with open('citylist.csv', 'rb') as csvfile:
+        citysCsv = csv.reader(csvfile, delimiter=',', quotechar='"')
+        for city in citysCsv:
+            citys.append({"Name":city[0],"Country":city[1],"lat":city[2],"lon":city[3]})
+    return citys
 
-def canvas2lat(lat): 
-    """
-    Turn a latitutude in the form [0 , 180] to the form [-90 , 90]
-    """
-    return ((float(lat)+90) % 180) - 90
-
-def canvas2lon(lon):
-    """
-    Turn a longitude in the form [0 , 360] to the form [-180 , 180]
-    """
-    return ((float(lon)+180) % 360) - 180
 
 def displace(lat,lng,theta, distance,unit="miles"):
     """
@@ -69,57 +59,63 @@ def displace(lat,lng,theta, distance,unit="miles"):
 
     return [rad2deg(lat2), rad2deg(lng2)]
 
-  def midPoint(lat1, lon1, lat2, lon2):
+def deg2rad(theta):
+        return np.divide(np.dot(theta, np.pi), np.float32(180.0))
+
+def rad2deg(theta):
+        return np.divide(np.dot(theta, np.float32(180.0)), np.pi)
+
+def lat2canvas(lat):
     """
-    Calculate the midpoint between two coordinate points
+    Turn a latitude in the form [-90 , 90] to the form [0 , 180]
     """
+    return float(lat) % 180
 
-    # phi = 90 - latitude
-    lat1 = deg2rad(lat1)
-    lat2 = deg2rad(lat2)
-
-    # theta = longitude
-    lon1 = deg2rad(lon1)
-    lon2 = deg2rad(lon2)
-
-    X1 = cos(lat1) * cos(lon1)
-    Y1 = cos(lat1) * sin(lon1)
-    Z1 = sin(lat1)
-
-    X2 = cos(lat1) * cos(lon1)
-    Y2 = cos(lat1) * sin(lon1)
-    Z2 = sin(lat1)
-
-    X = (X1+X2) / 2
-    Y = (Y1+Y2) / 2
-    Z = (Z1+Z2) / 2
-
-    Lon = atan2(Y, X)
-    Hyp = sqrt(X * X + Y * Y)
-    Lat = atan2(Z, Hyp)
-
-    lat = Lat * 180/math.pi
-    lon = Lon * 180/math.pi
-
-    return[lat,lon]
-
-
-def haversine(lon1, lat1, lon2, lat2,units="miles"):
+def lon2canvas(lon):
     """
-    Calculate the great circle distance between two points 
-    on the earth (specified in decimal degrees)
+    Turn a longitude in the form [-180 , 180] to the form [0 , 360]
     """
-    # convert decimal degrees to radians 
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    return float(lon) % 360
 
-    # haversine formula 
-    dlon = lon2 - lon1 
-    dlat = lat2 - lat1 
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * asin(sqrt(a)) 
-    if units == "miles":
-       r = 3959 # Radius of earth in miles.
-    else:
-       r = 6371 # Radius of earth in kilometers.
+def canvas2lat(lat):
+    """
+    Turn a latitutude in the form [0 , 180] to the form [-90 , 90]
+    """
+    return ((float(lat)+90) % 180) - 90
 
-    return c * r
+def canvas2lon(lon):
+    """
+    Turn a longitude in the form [0 , 360] to the form [-180 , 180]
+    """
+    return ((float(lon)+180) % 360) - 180
+
+def main():
+    spindex = pyqtree.Index(bbox=[0,0,360,180])
+    cities = loadCities()
+
+    for c in cities:
+        #{'lat': '-18.01274', 'Country': 'Zimbabwe', 'lon': '31.07555', 'Name': 'Chitungwiza'}
+        item = c['Name']
+
+        minLat = float(c['lat'])-.1
+        minLon = float(c['lon'])-.1
+        maxLat = float(c['lat'])+.1
+        maxLon = float(c['lon'])+.1
+
+        bbox =[minLat,minLon,maxLat,maxLon]
+        spindex.insert(item=item, bbox=bbox)
+
+    overlapbbox = (51,51,86,86)
+    overlapbbox = (44.9793710,-110.9619141,41.1941565,-104.2822266)
+    matches = spindex.intersect(overlapbbox)
+    print(matches)
+
+    lat1 = 33.912523
+    lon1 = -98.497925
+
+    print(displace(lat1,lon1,270,300))
+
+
+
+if __name__ == '__main__':
+    main()
