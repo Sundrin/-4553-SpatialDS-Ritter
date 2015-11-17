@@ -4,7 +4,7 @@ import json
 
 nodes = []
 edges = []
-geomtry = []
+geomtry = {}
 
 with open('nodes.csv', 'rb') as csvfile:
   rows = csv.reader(csvfile, delimiter=',', quotechar="")
@@ -19,9 +19,11 @@ with open('edges.csv', 'rb') as csvfile:
 f = open('nodegeometry.json'. 'r')
 
 for line in f:
-  geometry.append(json.loads(line))
+  line = json.loads(line)
+  print line['id']
+  geometry[line['id']] = line['geometry']
   
-print len(nodes)
-print len(edges)
+#print len(nodes)
+#print len(edges)
 
-print geometry
+print geometry[str(203982)]
