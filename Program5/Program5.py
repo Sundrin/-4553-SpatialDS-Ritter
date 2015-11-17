@@ -9,7 +9,7 @@ geomtry = {}
 with open('nodes.csv', 'rb') as csvfile:
   rows = csv.reader(csvfile, delimiter=',', quotechar="")
   for row in rows:
-    nodes.append(row)
+    nodes.append(row) #.append because we need to add more memory as we go, same with edges
 
 with open('edges.csv', 'rb') as csvfile:
   rows = csv.reader(csvfile, delimiter=',', quotechar="")
