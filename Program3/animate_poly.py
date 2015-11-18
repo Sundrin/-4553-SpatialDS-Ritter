@@ -135,7 +135,35 @@ class Point:
         assert direction in ['N','NE','E','SE','S','SW','W','NW']
         self.direction = direction
 
-    def update_position(self):
+    def update_position(self, canvas):
+        if self.x <= 0:
+            if self.direction == "NW":
+                self.direction = "NE"
+            if self.direction == "SW":
+                self.direction = "SE"
+            if self.direction == "W":
+                self.direction = "E"
+        if self.y <= 0:
+            if self.direction == "NE":
+                self.direction = "SE"
+            if self.direction == "NW":
+                self.direction = "SW"
+            if self.direction == "N":
+                self.direction = "S"
+        if self.x >= canvas.width:
+            if self.direction == "SE":
+                self.direction = "SW"
+            if self.direction == "NE":
+                self.direction = "NW"
+            if self.direction == "E":
+                self.direction = "W"
+        if self.y >= canvas.height:
+            if self.direction == "SW":
+                self.direction = "NW"
+            if self.direction == "SE":
+                self.direction = "NE"
+            if self.direction == "S":
+                self.direction = "N"
         if self.direction == "N":
             self.y -= 1
         if self.direction == "NE":
@@ -182,7 +210,57 @@ class Rect:
     def __init__(self, pt1, pt2):
         """Initialize a rectangle from two points."""
         self.set_points(pt1, pt2)
-
+        
+    def update_position(self,canvas):
+        if self.x <= 0:
+            if self.direction == "NW":
+                self.direction = "NE"
+            if self.direction == "SW":
+                self.direction = "SE"
+            if self.direction == "W":
+                self.direction = "E"
+        if self.y <= 0:
+            if self.direction == "NE":
+                self.direction = "SE"
+            if self.direction == "NW":
+                self.direction = "SW"
+            if self.direction == "N":
+                self.direction = "S"
+        if self.x >= canvas.width:
+            if self.direction == "SE":
+                self.direction = "SW"
+            if self.direction == "NE":
+                self.direction = "NW"
+            if self.direction == "E":
+                self.direction = "W"
+        if self.y >= canvas.height:
+            if self.direction == "SW":
+                self.direction = "NW"
+            if self.direction == "SE":
+                self.direction = "NE"
+            if self.direction == "S":
+                self.direction = "N"
+        if self.direction == "N":
+            self.y -= 1
+        if self.direction == "NE":
+            self.y -= 1
+            self.x += 1
+        if self.direction == "E":
+            self.x += 1
+        if self.direction == "SE":
+            self.x += 1
+            self.y += 1
+        if self.direction == "S":
+            self.y += 1
+        if self.direction == "SW":
+            self.x -= 1
+            self.y += 1
+        if self.direction == "W":
+            self.x -= 1
+        if self.direction == "NW":
+            self.y -= 1
+            self.x -= 1
+            
     def set_points(self, pt1, pt2):
         """Reset the rectangle coordinates."""
         (x1, y1) = pt1.as_tuple()
