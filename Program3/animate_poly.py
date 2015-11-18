@@ -434,10 +434,12 @@ class Driver(pantograph.PantographHandler):
 		
 		for point in range(len(self.pointList)):
 	        self.pointList[point].update_position()
-	        
-        if self.hitWall(self.p1.x, self.p1.y):
-            self.changeDirection(self.p1.direction)
-
+	 self.p1.update_position()
+	 self.p2.update_position()
+	 self.poly1.update_position()
+	 self.poly2.update_position()
+	
+	self.hitwall()
         self.drawShapes()
 
 
