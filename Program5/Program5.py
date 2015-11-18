@@ -25,5 +25,6 @@ for line in f:
   
 #print len(nodes)
 #print len(edges)
+geo =  json.loads(geometry[str(203982)])
 
-print geometry[str(203982)]
+print len(geo)
