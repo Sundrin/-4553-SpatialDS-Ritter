@@ -311,6 +311,11 @@ class Polygon:
         """Initialize a polygon from list of points."""
         self.set_points(pts)
 
+    def set_direction(self,direction):
+        assert direction in ['N','NE','E','SE','S','SW','W','NW']
+        self.direction = direction
+        self.updateMBR()
+
     def set_points(self, pts):
         """Reset the poly coordinates."""
 
@@ -336,6 +341,23 @@ class Polygon:
             self.points.append(Point(x,y))
 
         self.mbr = Rect(Point(self.minX,self.minY),Point(self.maxX,self.maxY))
+        
+	def updateMBR(self):
+		self.oldMbr = self.mbr
+		self.minX = sys.maxsize
+		self.minY = sys.maxsize
+		self.maxX = sys.maxsize * -1
+		self.maxY = sys.maxsize * -1
+		for p in self.points:
+			if p.x < self.minX:
+				self.minX = p.x
+			if p.x > self.maxX:
+				self.maxX = p.x
+			if p.y < self.minY:
+				self.minY = p.y
+			if p.y > self.maxY:
+				self.maxY = p.y
+		self.mbr = Rectangle(Point(self.minX,self.minY),Point(self.maxX,self.maxY))
 
     def get_points(self):
         generic = []
@@ -398,23 +420,6 @@ class Driver(pantograph.PantographHandler):
             color = "#F00"
         self.fill_oval(self.p2.x, self.p2.y, 7, 7, color)
 
-    def changeDirection(self,direction):
-        if direction == "NE":
-            self.direction == "SW"
-        if direction == "N":
-            self.direction == "S"
-        if direction == "S":
-            self.direction == "N"
-        if direction == "NW":
-            self.direction == "SE"
-        if direction == "SE":
-            self.direction == "NW"
-        if direction == "E":
-            self.direction == "W"
-        if direction == "W":
-            self.direction == "E"
-        if direction == "SW":
-            self.direction == "NE"
 
     def hitWall(self,x,y):
         if x >= self.width or y >= self.width:
@@ -423,12 +428,15 @@ class Driver(pantograph.PantographHandler):
 
     def update(self):
         self.clear_rect(0, 0, self.width, self.height)
-
+        
+		for poly in range(len(self.polyList)):
+			self.polyList[poly].update_position()
+		
+		for point in range(len(self.pointList)):
+	        self.pointList[point].update_position()
+	        
         if self.hitWall(self.p1.x, self.p1.y):
             self.changeDirection(self.p1.direction)
-
-        self.p1.update_position()
-        self.p2.update_position()
 
         self.drawShapes()
 
