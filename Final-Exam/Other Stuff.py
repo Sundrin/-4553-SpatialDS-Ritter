@@ -89,12 +89,14 @@ class BinaryTree:
         level = 0
         while node != None:
             parent = node
+            level = (t.disc +1) %2
             if node.key[level] > t.key[level]:
                 node = node.left
             else:
                 node = node.right
                 level = self.nextDisc(level)
         t.p = parent
+        
         if parent == None:
             self.root = t
         elif t.key < parent.key:
