@@ -25,7 +25,7 @@ class BinaryTree:
             return None
         else:
             self.inorder(node.left)
-            print node.key,
+            print node.key
             self.inorder(node.right)
 
     def search(self, k):
@@ -126,26 +126,29 @@ class BinaryTree:
 
 if __name__ == "__main__":
 
-    B = BinaryTree();
+    print "========================"
+    print "Devin Ritter\nTerry Griffin\n4553 Spatial Data Structures\nFinal Exam Thing"
+    print "========================\n\n\n"
+    B = BinaryTree()
     num = 11
     extranums = 9
 
-    '''for i in range(100):
-        B.insert(random.randint(1,100))'''
+    for i in range(100):
+        r1 = random.randint(1,100)
+        r2 = random.randint(1,100)
+        B.insert([r1,r2])
 
     while extranums != 0:
         B.insert([num,num])
-        print (num, num)
         num = num + 11
         extranums = extranums - 1
-
     B.insert([100,100])
 
     """If I wanted to insert pairs of numbers"""
 
-    for i in range(10):
+'''for i in range(10):
         for j in range(10):
             r1 = random.randint(1,100)
             r2 = random.randint(1,100)
             B.insert([r1,r2])
-            print (r1,r2)
+            print (r1,r2)'''
