@@ -2,7 +2,7 @@
 
 2. I think more focus on the data structures would have been the way to go. Maybe learn more about where the data structures are used most.
 
-3. In my opinion, 5 programs is enough for the semester, however it would be cool to have some homeworks with code snippets of the data structures.
+3. In my opinion, 5 programs is enough for the semester, however it would be cool to have some homeworks with code snippets of the data structures to insert nodes or something of that nature.
 
 4. Statement
 
