@@ -1,3 +1,5 @@
+#Yo don't grade this. I mean if you wanna, go ahead. I'm just messing around
+
 import random
 
 class TreeNode:
