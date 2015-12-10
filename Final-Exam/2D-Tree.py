@@ -96,8 +96,8 @@ class BinaryTree:
         node = self.root
         discriminator = 0
         if node != None:
-
             nextdisc = (discriminator + 1) % 2 #mod 2 because it's a 2D tree
+        return nextdisc
 
     def delete(self, node):
         if node.left == None:
