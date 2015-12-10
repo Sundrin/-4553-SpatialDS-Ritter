@@ -6,7 +6,7 @@ class TreeNode:
         self.left = None
         self.right = None
         self.p = None
-        
+
     def __repr__(self):
         return "< %s %s >" % (self.key,self.p)
 
@@ -74,7 +74,7 @@ class BinaryTree:
         return parent
 
     def insert(self, k):
-        t = TreeNode(k)
+        t = TreeNode(k) #T is the node we're trying to insert
         parent = None
         node = self.root
         while node != None:
@@ -92,6 +92,12 @@ class BinaryTree:
             parent.right = t
         return t
 
+    def nextdisc(self, node):
+        node = self.root
+        discriminator = 0
+        if node != None:
+
+            nextdisc = (discriminator + 1) % 2 #mod 2 because it's a 2D tree
 
     def delete(self, node):
         if node.left == None:
@@ -117,21 +123,29 @@ class BinaryTree:
             node.p.right = newnode
         if newnode != None:
             newnode.p = node.p
-            
+
 if __name__ == "__main__":
 
     B = BinaryTree();
-    
-    for i in range(100):
-        B.insert(random.randint(1,100))
-    
+    num = 11
+    extranums = 9
+
+    '''for i in range(100):
+        B.insert(random.randint(1,100))'''
+
+    while extranums != 0:
+        B.insert([num,num])
+        print (num, num)
+        num = num + 11
+        extranums = extranums - 1
+
+    B.insert([100,100])
+
     """If I wanted to insert pairs of numbers"""
-    """
+
     for i in range(10):
         for j in range(10):
             r1 = random.randint(1,100)
             r2 = random.randint(1,100)
             B.insert([r1,r2])
             print (r1,r2)
-   """
-
